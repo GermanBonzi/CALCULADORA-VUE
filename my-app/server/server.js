@@ -6,9 +6,6 @@ const cors = require('cors');
 const app = express();
 const routes = require('../routes/index');
 
-  
- 
- 
  // bd
 
  mongoose.Promise = global.Promise;
@@ -22,7 +19,7 @@ const routes = require('../routes/index');
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
- 
+  
  /* 
 let resultado=0
 let formula =''

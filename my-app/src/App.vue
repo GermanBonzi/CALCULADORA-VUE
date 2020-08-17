@@ -22,12 +22,13 @@
     <div @click="operacion(0)" class='button zero button-bottom'>0</div>
     <div @click="punto" class='button darker button-bottom'>.</div>
     <div @click="igual" class='button operator button-bottom'>=</div>
+    <button @click="verMas(formula,resultado,nombre)" class="button operator" title="Ver Mas">GUARDAR CALCULO</button>
   </div>
  
   <div>
     <!--<button class="button operator" @click="guardar"> Guardar</button>-->
     <template>
-      <button @click="verMas(formula,resultado,nombre)" class="button operator" style="width:150px;"  title="Ver Mas">DETALLES</button>
+      
       <b-navbar-nav class="ml-auto">
           <b-nav-form>
             <b-form-input size="sm" class="mr-sm-2" type="text" placeholder="Buscar" id="buscado"></b-form-input>
@@ -43,7 +44,7 @@
               <slot name="header">
                 <h2 style="color:white; text-align:left;">
                   <i class="far fa-list-alt"></i>
-                  Detalles
+                  DETALLES 
                 </h2>
                 <button class="modal-default-button" @click="cerrar()">
                  <i class="far fa-times-circle"></i>
@@ -116,20 +117,10 @@ export default {
         nombre = this.nombre
      },
 
-     buscar(lista){
+     buscar(){
        var buscado = document.getElementById("buscado").value;
-       axios.get('http://localhost:3000/operacion').then(function(response){
-        //console.log(response)
-        lista = response.data
-        //console.log(buscado)
-        //console.log(lista[0].nombre)
-        for(let i=0; i<lista.length;i++){
-          if (buscado===lista[i].nombre){
-            console.log('encontrado')
-            console.log(lista[i].nombre)
-            console.log(lista[i].formula+'='+lista[i].resultado)
-          }  
-        }
+       axios.get('http://localhost:3000/operacion/'+buscado+'').then(function(response){
+        console.log(response)
        }).catch(error =>{console.log(error)})
      },
    
@@ -160,6 +151,8 @@ export default {
                         }).catch(error=>{
                           console.log(error)
                         });
+
+                        this.showModal=false;
 
                 
     },

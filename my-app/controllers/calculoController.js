@@ -20,24 +20,34 @@ exports.insertarCalculo = async function(req,res){
 }
  
 
-exports.obtenerCalculos = async function(req,res,next){
+exports.obtenerCalculos = async function(req,res){
+   
+    let buscado = req.params.nombre
     try{
-        calculoConsulta = await calculadora.find({})
-        res.json(calculoConsulta)
+        const calculoConsulta = await calculadora.find({})
+        for(let i=0; i<calculoConsulta.length;i++){
+            if (buscado===calculoConsulta[i].nombre){
+              console.log('encontrado')
+              res.json(calculoConsulta[i])
+              console.log('buscado:')
+              console.log(buscado)
+              console.log(calculoConsulta[i].formula+'='+calculoConsulta[i].resultado)
+            }  
+          }
     
     }catch(error){
         console.log(error)
-        next()
+        
     }
 }
  
 
 exports.obtenerCalculoId = async function(req,res){
     try{
-        const calculoId = await calculadora.findById(req.params.id)
+        const calculoId = await calculadora.find(req.body.nombre)
         res.json(calculoId)
         console.log(calculoId.nombre)
     }catch(error){
         console.log(error)
     }
-}
+} 
