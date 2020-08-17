@@ -15,16 +15,19 @@ exports.insertarCalculo = async function(req,res){
         res.json({mensaje:'el calculo se agrego correctamente'})
     }catch(error){
         console.log(error)
-    }
+        
+    } 
 }
  
 
-exports.obtenerCalculos = async function(req,res){
+exports.obtenerCalculos = async function(req,res,next){
     try{
         calculoConsulta = await calculadora.find({})
         res.json(calculoConsulta)
+    
     }catch(error){
         console.log(error)
+        next()
     }
 }
  
@@ -33,6 +36,7 @@ exports.obtenerCalculoId = async function(req,res){
     try{
         const calculoId = await calculadora.findById(req.params.id)
         res.json(calculoId)
+        console.log(calculoId.nombre)
     }catch(error){
         console.log(error)
     }

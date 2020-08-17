@@ -11,4 +11,4 @@ module.exports = function(){
     router.get("/operacion/:id", calculoController.obtenerCalculoId)
 
     return router
-} 
+}  

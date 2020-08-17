@@ -28,6 +28,12 @@
     <!--<button class="button operator" @click="guardar"> Guardar</button>-->
     <template>
       <button @click="verMas(formula,resultado,nombre)" class="button operator" style="width:150px;"  title="Ver Mas">DETALLES</button>
+      <b-navbar-nav class="ml-auto">
+          <b-nav-form>
+            <b-form-input size="sm" class="mr-sm-2" type="text" placeholder="Buscar" id="buscado"></b-form-input>
+            <b-button size="sm"  class="button operator" @click="buscar()">Buscar</b-button>
+          </b-nav-form>
+     </b-navbar-nav>
     </template>
     <transition v-if="showModal" class="animation fadeInLeft" name="modal">
       <div class="modal-mask">
@@ -85,7 +91,8 @@ export default {
      formula:'',
      resultado:0,
      nombre:'',
-     showModal: false
+     showModal: false,
+     lista : []
     }
   },
   methods: {
@@ -103,11 +110,29 @@ export default {
     },
 
      verMas(formula,resultado,nombre) {
-        this.showModal = true;
+        this.showModal = true
         formula = this.formula
         resultado = this.resultado
         nombre = this.nombre
      },
+
+     buscar(lista){
+       var buscado = document.getElementById("buscado").value;
+       axios.get('http://localhost:3000/operacion').then(function(response){
+        //console.log(response)
+        lista = response.data
+        //console.log(buscado)
+        //console.log(lista[0].nombre)
+        for(let i=0; i<lista.length;i++){
+          if (buscado===lista[i].nombre){
+            console.log('encontrado')
+            console.log(lista[i].nombre)
+            console.log(lista[i].formula+'='+lista[i].resultado)
+          }  
+        }
+       }).catch(error =>{console.log(error)})
+     },
+   
 
     masmenos(){
       this.formula=this.formula.charAt(0) === '-' ?
@@ -131,7 +156,7 @@ export default {
                             console.log(response);
                             _this.resultado= response.data.resultado
                             _this.nombre = response.data.nombre
-                            
+                  
                         }).catch(error=>{
                           console.log(error)
                         });
