@@ -21,21 +21,19 @@
     <div @click="operacion('+')" class='button operator'>+</div>
     <div @click="operacion(0)" class='button zero button-bottom'>0</div>
     <div @click="punto" class='button darker button-bottom'>.</div>
-    <div @click="igual" class='button operator button-bottom'>=</div>
-    <button @click="verMas(formula,resultado,nombre)" class="button operator" title="Ver Mas">GUARDAR CALCULO</button>
+    <div @click="igual" class='button operator button-bottom'>=</div> 
+
+   <b-button block variant="primary" class="button zero button-bottom button search" style="margin: 0px " @click="verMas(formula,resultado,nombre)">GUARDAR CALCULO</b-button>
+   <b-form-input size="sm" class="mr-sm-2" type="text" placeholder="Buscar" id="buscado"></b-form-input>
+   <b-button size="sm"  class="button search" @click="buscar()">BUSCAR CALCULO</b-button>
+
   </div>
- 
+
+  
+  
+
   <div>
     <!--<button class="button operator" @click="guardar"> Guardar</button>-->
-    <template>
-      
-      <b-navbar-nav class="ml-auto">
-          <b-nav-form>
-            <b-form-input size="sm" class="mr-sm-2" type="text" placeholder="Buscar" id="buscado"></b-form-input>
-            <b-button size="sm"  class="button operator" @click="buscar()">Buscar</b-button>
-          </b-nav-form>
-     </b-navbar-nav>
-    </template>
     <transition v-if="showModal" class="animation fadeInLeft" name="modal">
       <div class="modal-mask">
         <div class="modal-wrapper">
@@ -69,7 +67,7 @@
                   <input v-model="nombre">
                   <b-col>{{nombre}}</b-col>
                 </b-row>
-                <button class="button operator" @click="guardar"> Guardar</button>
+                <button class="button search" @click="guardar"> Guardar</button>
               </slot>
             </div>
            </div>
@@ -153,7 +151,7 @@ export default {
                         });
 
                         this.showModal=false;
-
+ 
                 
     },
 
@@ -192,24 +190,7 @@ export default {
       this.resultado = eval(this.formula)
        console.log("this.formula:");
        console.log(this.formula);
-       console.log(this.resultado)
-       /*let _this=this;
-       axios.post('http://localhost:3000/operacion',
-                        {
-                        formula:this.formula},
-                        { headers: {
-                          'Content-Type': 'application/json'
-                        },
-                        }).then(function(response){
-                            console.log(response);
-                            _this.resultado=response.data.resultado
-                            
-                        }).catch(error=>{
-                          console.log(error)
-                        });*/
-
-
- 
+       console.log(this.resultado) 
     }
   }
 };
@@ -261,6 +242,10 @@ export default {
 }
 .button-bottom {
   border-bottom: 0;
+}
+
+.search{
+  background: yellowgreen;
 }
 .operator {
   background: hsl(153, 48%, 49%);
@@ -335,14 +320,6 @@ export default {
   float: right;
 }
 
-/*
- * The following styles are auto-applied to elements with
- * transition="modal" when their visibility is toggled
- * by Vue.js.
- *
- * You can easily play with the modal transition by editing
- * these styles.
- */
 
 .modal-enter {
   opacity: 0;

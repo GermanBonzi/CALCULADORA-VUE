@@ -5,7 +5,7 @@ let formula=''
 let nombre =''
 
 exports.insertarCalculo = async function(req,res){
-    console.log(req.body.resultado)
+    //console.log(req.body.resultado)
     resultado=eval(req.body.formula)
     formula = req.body.formula
     nombre = req.body.nombre
@@ -16,12 +16,11 @@ exports.insertarCalculo = async function(req,res){
     }catch(error){
         console.log(error)
         
-    } 
+    }
 }
+  
  
-
-exports.obtenerCalculos = async function(req,res){
-   
+exports.obtenerCalculos = async function(req,res){  
     let buscado = req.params.nombre
     try{
         const calculoConsulta = await calculadora.find({})
